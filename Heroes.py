@@ -18,14 +18,14 @@ class Hero(Spell):
         #verify if hero has the posbility to implement spells
         self.blessed = issubclass(Hero,Spell)
         
-    
-    def damage(x):
-        def deco(f):
-            @wraps(f)
-            def wrapper(self,*args):
-                return  f(self,*args) - int(x)
-            return wrapper
-        return deco
+##    @staticmethod
+##    def damage(x):
+##        def deco(f):
+##            @wraps(f)
+##            def wrapper(self,*args):
+##                return  f(self,*args) - int(x)
+##            return wrapper
+##        return deco
 
     def get_health(self):
         """getter for _health"""
@@ -33,7 +33,10 @@ class Hero(Spell):
 
     
     def set_health(self, x):
-        """damage as setter for _health"""  
+        """ damage as setter for _health
+            Damage = Attack - Defence
+            Hp = Hp - Damage = Hp + Defence - Attack
+            """  
         self._health = self._health + self.defence - x
 
     
@@ -51,17 +54,13 @@ class Hero(Spell):
             return False
 
     def magic_shield(self,x):
-        # takes half the damage 
+        # takes half of the damage 
         super(Hero,self).__init__("magicshield",0.2)
         if random() <= self.percentage:
             self._health = self._health + ((self.defence - x)//2)
             return True
         else:
             return False
-
-
-    
-    
 
 
 

@@ -1,5 +1,7 @@
+from Spells import Spell
+from random import random
 
-class Creature():
+class Creature(Spell):
     """template class
        to create beasts"""
 
@@ -22,7 +24,25 @@ class Creature():
         
     def attack(self):
         return self.strength
-    
+
+    def rapid_strike(self):
+        # strike twice in his turn aka strength doubles
+        
+        super(Creature,self).__init__("rapidstrike",0.1)
+        if random() <= self.percentage:
+            self.new_strength = self.strength * 2
+            return True
+        else:
+            return False
+
+    def magic_shield(self,x):
+        # takes half of the damage 
+        super(Creature,self).__init__("magicshield",0.2)
+        if random() <= self.percentage:
+            self._health = self._health + ((self.defence - x)//2)
+            return True
+        else:
+            return False
 
 
 if __name__ == "__main__":
