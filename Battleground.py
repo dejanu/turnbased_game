@@ -1,6 +1,6 @@
-from Heroes import Hero
+from Heroes import Hero, randint
 from Creatures import Creature
-from random import randint
+
 
 
 
@@ -30,7 +30,7 @@ class Battle():
         self.creature = creature
 
     def __gt__(self,other):
-        """ overload operator to
+        """ overload greater operator to
             determine which object attacks first
             """
         
@@ -73,15 +73,20 @@ class Battle():
         # hero attacks first
         if self.hero.charge_attack == True:
 
+            # test if creature got lucky and hero missed the attack
+            if self.creature.get_lucky() == True:
+                print("{0} got lucky and {1} missed his attack".format(self.creature.name, self.hero.name))
 
-            if self.hero.rapid_strike() == True:
-                print("Hero {0} has acquired rapid_strike and delivered and attack of {1}".format(self.hero.name,self.hero.new_strength)) 
-                self.creature.set_health(self.hero.new_strength)
-                
             else:
-                #self.hero.rapid_strike() == False:
-                print("{0} has delivered an attack of {1} ".format(self.hero.name, self.hero.attack()))
-                self.creature.set_health(self.hero.attack())
+                #verify if hero has acquired rapid_strike
+                if self.hero.rapid_strike() == True:
+                    print("Hero {0} has acquired rapid_strike and delivered and attack of {1}".format(self.hero.name,self.hero.new_strength)) 
+                    self.creature.set_health(self.hero.new_strength)
+                
+                else:
+                    #self.hero.rapid_strike() == False:
+                    print("{0} has delivered an attack of {1} ".format(self.hero.name, self.hero.attack()))
+                    self.creature.set_health(self.hero.attack())
 
                 
             # hero finished attack
@@ -91,13 +96,20 @@ class Battle():
         # creature attacks first
         else:
 
-            if self.hero.magic_shield(self.creature.attack()) == True:
-                print("Hero {0} has acquired magic_shield".format(self.hero.name))
-                print("{0} has delivered an attack of {1}".format(self.creature.name, self.creature.attack()))
+            #verify if hero got lucky and creature missed the attack
+            if self.hero.get_lucky() == True:
+                print("{0} got lucky and {1} missed his attack".format(self.hero.name, self.creature.name))
 
             else:
-                print("{0} has delivered an attack of {1}".format(self.creature.name, self.creature.attack()))
-                self.hero.set_health(self.creature.attack())
+
+                #verify if hero has acquired magic_shield
+                if self.hero.magic_shield(self.creature.attack()) == True:
+                    print("Hero {0} has acquired magic_shield".format(self.hero.name))
+                    print("{0} has delivered an attack of {1}".format(self.creature.name, self.creature.attack()))
+
+                else:
+                    print("{0} has delivered an attack of {1}".format(self.creature.name, self.creature.attack()))
+                    self.hero.set_health(self.creature.attack())
 
             # creature finished attack
             self.creature.charge_attack =  False
@@ -123,10 +135,15 @@ class Battle():
         
     def check_winner(self):
         """ check who won the fight"""
-        if self.hero.charge_attack == True:
-            print("Creature {0} has won".format(first_round.creature.name))
+        
+        if self.hero.charge_attack == True and self.creature.charge_attack == False:
+            print("Creature {0} has won".format(self.creature.name))
+            return "Creature"
+        elif self.hero.charge_attack == False and self.creature.charge_attack == True:
+            print("Hero {0} has won".format(self.hero.name))
+            return "Hero"
         else:
-            print("Hero {0} has won".format(first_round.hero.name))
+            raise ValueError
 
             
 if __name__ == "__main__":
@@ -152,6 +169,7 @@ if __name__ == "__main__":
             if first_round.fight.calls == 20:
                 print("Number of max 20 turns has been reached")
                 first_round.check_winner()
+            
                 
             
 

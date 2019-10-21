@@ -1,6 +1,6 @@
 from functools import wraps
 from Spells import Spell
-from random import random
+from random import random, randint
 
 
 class Hero(Spell):
@@ -42,6 +42,14 @@ class Hero(Spell):
     
     def attack(self):
        return self.strength
+
+    def get_lucky(self):
+        """ chance to get lucky"""
+        if randint(0,100) < self.luck:
+            return True
+        else:
+            return False
+        
     
     def rapid_strike(self):
         # strike twice in his turn aka strength doubles

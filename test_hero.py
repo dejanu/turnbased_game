@@ -13,8 +13,9 @@ class TestHero(unittest.TestCase):
 
     def test_health_setter(self):
         """test health setter"""
-        o = Hero("orderus").set_health(20)
-        self.assertEqual(o.get_health(),50)
+        o = Hero("orderus")
+        o.set_health(20)
+        self.assertEqual(o.get_health(),95)
         
 
     # if Hero extends Spell then it must implement at least one spell
