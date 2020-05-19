@@ -2,9 +2,6 @@ from Heroes import Hero, randint
 from Creatures import Creature
 
 
-
-
-
 class Battle():
     """class  that simulates a battle with max 20 turns"""
 
@@ -14,7 +11,6 @@ class Battle():
             helper.calls+=1
             print("Round number {0}".format(helper.calls))
             return func(*args)
-    
         helper.calls=0
         return helper
 
@@ -30,15 +26,16 @@ class Battle():
         self.creature = creature
 
     def __gt__(self,other):
-        """ overload greater operator to
+        """ 
+        overload greater operator to
             determine which object attacks first
-            """
+        """
         
+        # the first atack is done by the player with higher speed
         if self.hero.speed > other.creature.speed:
             self.hero.charge_attack = True
             print("{0} has first attack {1}".format(self.hero.name, self.hero.attack()))
            
-
         elif self.hero.speed == other.creature.speed:
             
             if self.hero.luck > self.creature.luck:
@@ -169,9 +166,6 @@ if __name__ == "__main__":
             if first_round.fight.calls == 20:
                 print("Number of max 20 turns has been reached")
                 first_round.check_winner()
-            
-                
-            
 
     first_round.check_winner()
 

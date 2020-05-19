@@ -4,10 +4,12 @@ from random import random, randint
 
 
 class Hero(Spell):
-    """ template class to create heroes
-        if subclass Spell means that hero can acquire spells and must implement them"""
+    """ 
+    template class to create heroes
+    if subclass Spell means that hero can acquire spells and must implement them
+    """
 
-    def __init__(self,name ,health = 70 ,strength = 70 ,defence = 45 ,speed = 40, luck = 10):
+    def __init__(self, name, health = 70, strength = 70, defence = 45, speed = 40, luck = 10):
         self.name = name
         self._health = health
         self.strength = strength
@@ -15,7 +17,7 @@ class Hero(Spell):
         self.speed = speed
         self.luck = luck
 
-        #verify if hero has the posbility to implement spells
+        # verify if hero has the posbility to implement spells
         self.blessed = issubclass(Hero,Spell)
         
 ##    @staticmethod
